@@ -6,7 +6,8 @@ search_tool = DuckDuckGoSearchRun()
 
 from langchain.llms import Ollama
 ollama_openhermes = Ollama(model="openhermes")
-ollama_gemma = Ollama(model="gemma:7b-text-q6_K")
+ollama_gemma = Ollama(model="gemma")
+ollama_mistral = Ollama(model="mistral")
 
 # You can choose to use a local model through Ollama for example. See ./docs/how-to/llm-connections.md for more information.
 # from langchain_community.llms import Ollama
@@ -24,7 +25,7 @@ researcher = Agent(
   You have a knack for dissecting complex data and presenting actionable insights.""",
   verbose=True,
   allow_delegation=False,
-  llm=ollama_gemma,
+  llm=ollama_mistral,
   tools=[search_tool]
   # You can pass an optional llm attribute specifying what mode you wanna use.
   # It can be a local model through Ollama / LM Studio or a remote
@@ -45,7 +46,7 @@ writer = Agent(
   You transform complex concepts into compelling narratives.""",
   verbose=True,
   allow_delegation=True,
-  llm=ollama_gemma
+  llm=ollama_mistral
   # (optional) llm=ollama_llm
 )
 
@@ -70,7 +71,7 @@ task2 = Task(
 crew = Crew(
   agents=[researcher, writer],
   tasks=[task1, task2],
-  llm=ollama_gemma,
+  llm=ollama_mistral,
   verbose=2, # You can set it to 1 or 2 to different logging levels
   process=Process.sequential
 )
